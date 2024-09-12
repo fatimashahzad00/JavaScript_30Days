@@ -1,51 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="https://fav.farm/✅" />
-</head>
-<body>
-    <div class="keys">
-        <div class="key playing" data-key="65">
-            <kbd>A</kbd>
-            <span class="sound">clap</span>
-        </div>
-        <div class="key playing" data-key="83">
-            <kbd>S</kbd>
-            <span class="sound">hihat</span>
-        </div>
-        <div class="key playing" data-key="68">
-            <kbd>D</kbd>
-            <span class="sound">kick</span>
-        </div>
-        <div class="key playing" data-key="70">
-            <kbd>F</kbd>
-            <span class="sound">openhat</span>
-        </div>
-        <div class="key playing" data-key="71">
-            <kbd>G</kbd>
-            <span class="sound">boom</span>
-        </div>
-        <div class="key playing" data-key="72">
-            <kbd>H</kbd>
-            <span class="sound">ride</span>
-        </div>
-        <div class="key playing" data-key="74">
-            <kbd>J</kbd>
-            <span class="sound">snare</span>
-        </div>
-        <div class="key playing" data-key="75">
-            <kbd>K</kbd>
-            <span class="sound">tom</span>
-        </div>
-        <div class="key playing" data-key="76">
-            <kbd>L</kbd>
-            <span class="sound">tink</span>
-        </div>
+  </head>
 
+  <body>
+    <div class="keys">
+      <div class="key" data-key="65">
+        <kbd>A</kbd>
+        <span class="sound">clap</span>
+      </div>
+      <div class="key" data-key="83">
+        <kbd>S</kbd>
+        <span class="sound">hihat</span>
+      </div>
+      <div class="key" data-key="68">
+        <kbd>D</kbd>
+        <span class="sound">kick</span>
+      </div>
+      <div class="key" data-key="70">
+        <kbd>F</kbd>
+        <span class="sound">openhat</span>
+      </div>
+      <div class="key" data-key="71">
+        <kbd>G</kbd>
+        <span class="sound">boom</span>
+      </div>
+      <div class="key" data-key="72">
+        <kbd>H</kbd>
+        <span class="sound">ride</span>
+      </div>
+      <div class="key" data-key="74">
+        <kbd>J</kbd>
+        <span class="sound">snare</span>
+      </div>
+      <div class="key" data-key="75">
+        <kbd>K</kbd>
+        <span class="sound">tom</span>
+      </div>
+      <div class="key" data-key="76">
+        <kbd>L</kbd>
+        <span class="sound">tink</span>
+      </div>
     </div>
 
     <audio data-key="65" src="sounds/clap.wav"></audio>
@@ -59,10 +59,27 @@
     <audio data-key="76" src="sounds/tink.wav"></audio>
 
     <script>
-        window.addEventListener('keydown', function(e) {
-            console.log(e);
-            
-        }) 
+      function playSound(e) {
+        // console.log(e.keyCode);
+        const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+        const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+        // console.log(audio);
+        if (!audio) return; //stop the function if the key is not in the drum kit
+        audio.currentTime = 0; //reset the audio to the beginning
+        audio.play();
+        key.classList.add("playing");
+      }
+
+      function removeTransition(e) {
+        if (e.propertyName !== "transform") return; //skip if not a transition property
+        e.target.classList.remove("playing");
+      }
+
+      const keys = document.querySelectorAll(".key");
+      keys.forEach((key) =>
+        key.addEventListener("transitionend", removeTransition)
+      );
+      window.addEventListener("keydown", playSound);
     </script>
-</body>
+  </body>
 </html>
