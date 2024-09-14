@@ -9,6 +9,7 @@
   </head>
 
   <body>
+    <div class="loading">Loading sounds...</div>
     <div class="keys">
       <div class="key" data-key="65">
         <kbd>A</kbd>
@@ -59,20 +60,34 @@
     <audio data-key="76" src="sounds/tink.wav"></audio>
 
     <script>
+      // Loading sound status
+      window.addEventListener("load", () => {
+        const audios = document.querySelectorAll("audio");
+        let loadedCount = 0;
+        audios.forEach((audio) => {
+          audio.addEventListener("canplaythrough", () => {
+            loadedCount++;
+            if (loadedCount === audios.length) {
+              document.querySelector(".loading").style.display = "none";
+            }
+          });
+        });
+      });
+
       function playSound(e) {
-        // console.log(e.keyCode);
         const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
         const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
-        // console.log(audio);
-        if (!audio) return; //stop the function if the key is not in the drum kit
-        audio.currentTime = 0; //reset the audio to the beginning
+        if (!audio) return;
+        audio.currentTime = 0;
         audio.play();
         key.classList.add("playing");
+        document.body.classList.add("background-animation"); // Add background animation
       }
 
       function removeTransition(e) {
-        if (e.propertyName !== "transform") return; //skip if not a transition property
+        if (e.propertyName !== "transform") return;
         e.target.classList.remove("playing");
+        document.body.classList.remove("background-animation"); // Remove background animation
       }
 
       const keys = document.querySelectorAll(".key");
@@ -80,6 +95,14 @@
         key.addEventListener("transitionend", removeTransition)
       );
       window.addEventListener("keydown", playSound);
+
+      // Add touch support
+      keys.forEach((key) =>
+        key.addEventListener("touchstart", () => {
+          const keyCode = key.getAttribute("data-key");
+          playSound({ keyCode: parseInt(keyCode) });
+        })
+      );
     </script>
   </body>
 </html>
