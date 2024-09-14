@@ -1,0 +1,97 @@
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f0f0f0;
+  background: url("thomas-heintz-0tgMnMIYQ9Y-unsplash.jpg") no-repeat center
+    center fixed;
+  background-size: cover;
+}
+
+.container {
+  text-align: center;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#quote-box {
+  margin: 2rem 0;
+  position: relative;
+  padding: 2px 25px;
+}
+
+#quote-text {
+  font-size: 1.5rem;
+  font-style: italic;
+  /* opacity: 0;
+    transition: opacity 0.5s; */
+}
+
+#quote-author {
+  margin-top: 1rem;
+  font-weight: bold;
+  /* opacity: 0;
+    transition: opacity 0.5s; */
+}
+
+button {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  background-image: linear-gradient(
+    to right,
+    #314755 0%,
+    #26a0da 51%,
+    #314755 100%
+  );
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+}
+
+button:hover {
+  background-color: #45a049;
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+.show-quote {
+  opacity: 1;
+}
+
+#quote-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #f0f0f0;
+  opacity: 0.5;
+  border-radius: 10px;
+  animation: loading 1s infinite;
+}
+
+@keyframes loading {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(20px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
