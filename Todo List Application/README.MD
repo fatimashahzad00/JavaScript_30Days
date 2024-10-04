@@ -40,15 +40,6 @@ Getting Started
 *   Basic understanding of HTML, CSS, and JavaScript
     
 
-### Installation
-
-1.  Clone the repository:
-
-```bash
-  git clone https://github.com/yourusername/task-management-app.git
-```
-2. Open the index.html file in your web browser 
-
 ### Usage
 
 1.  Enter a task in the input field and click the "Add Task" button to add it to your task list.
