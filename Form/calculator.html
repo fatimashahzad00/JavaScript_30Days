@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .calculator-container {
+            width: 300px;
+            margin: 50px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .display-container {
+            width: 100%;
+            background-color: #eee;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #display {
+            font-size: 24px;
+            text-align: right;
+            margin: 0;
+        }
+
+        .button-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .number-button {
+            background-color: #f5f5f5;
+        }
+
+        .operator-button {
+            background-color: #4CAF50;
+            color: #fff;
+        }
+
+        .clear-button {
+            background-color: #FF9800;
+            color: #fff;
+        }
+
+        .backspace-button {
+            background-color: #FF9800;
+            color: #fff;
+        }
+
+        .equals-button {
+            background-color: #4CAF50;
+            color: #fff;
+            grid-column: 3 / 5;
+        }
+
+        .decimal-button {
+            background-color: #f5f5f5;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .calculator-container {
+                width: 80%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calculator-container {
+                width: 90%;
+            }
+
+            .button-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .equals-button {
+                grid-column: 1 / 3;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calculator-container">
+        <div class="display-container">
+            <p id="display"></p>
+        </div>
+        <div class="button-container">
+            <button id="clear" class="clear-button">C</button>
+            <button id="backspace" class="backspace-button">&lt;</button>
+            <button id="divide" class="operator-button">&divide;</button>
+            <button id="multiply" class="operator-button">&times;</button>
+            <button id="seven" class="number-button">7</button>
+            <button id="eight" class="number-button">8</button>
+            <button id="nine" class="number-button">9</button>
+            <button id="subtract" class="operator-button">&minus;</button>
+            <button id="four" class="number-button">4</button>
+            <button id="five" class="number-button">5</button>
+            <button id="six" class="number-button">6</button>
+            <button id="add" class="operator-button">&plus;</button>
+            <button id="one" class="number-button">1</button>
+            <button id="two" class="number-button">2</button>
+            <button id="three" class="number-button">3</button>
+            <button id="equals" class="equals-button">&equals;</button>
+            <button id="zero" class="number-button">0</button>
+            <button id="decimal" class="decimal-button">&period;</button>
+        </div>
+    </div>
+
+    <script>
+        // Get display element
+        const display = document.getElementById('display');
+
+        // Initialize variables
+        let currentNumber = '';
+        let previousNumber = '';
+        let operation = '';
+
+        // Function to update display
+        function updateDisplay(number) {
+            currentNumber += number;
+            display.textContent = currentNumber;
+        }
+
+        // Function to handle operations
+        function handleOperation(op) {
+            if (currentNumber !== '') {
+                previousNumber = currentNumber;
+                currentNumber = '';
+                operation = op;
+            }
+        }
+
+        // Function to calculate result
+        function calculateResult() {
+            if (previousNumber !== '' && currentNumber !== '') {
+                let result;
+                switch (operation) {
+                    case '+':
+                        result = parseFloat(previousNumber) + parseFloat(currentNumber);
+                        break;
+                    case '-':
+                        result = parseFloat(previousNumber) - parseFloat(currentNumber);
+                        break;
+                    case '*':
+                        result = parseFloat(previousNumber) * parseFloat(currentNumber);
+                        break;
+                    case '/':
+                        if (currentNumber !== '0') {
+                            result = parseFloat(previousNumber) / parseFloat(currentNumber);
+                        } else {
+                            display.textContent = 'Error: Division by zero';
+                            return;
+                        }
+                        break;
+                    default:
+                        return;
+                }
+                display.textContent = result.toString();
+                previousNumber = '';
+                currentNumber = result.toString();
+            }
+        }
+
+        // Function to clear input
+        function clearInput() {
+            currentNumber = '';
+            previousNumber = '';
+            operation = '';
+            display.textContent = '';
+        }
+
+        // Function to handle backspace
+        function handleBackspace() {
+            currentNumber = currentNumber.slice(0, -1);
+            display.textContent = currentNumber;
+        }
+
+        // Add event listeners to buttons
+        document.querySelectorAll('.number-button').forEach(button => {
+            button.addEventListener('click', () => {
+                updateDisplay(button.textContent);
+            });
+        });
+
+        document.querySelectorAll('.operator-button').forEach(button => {
+            button.addEventListener('click', () => {
+                handleOperation(button.textContent);
+            });
+        });
+
+        document.getElementById('equals').addEventListener('click', calculateResult);
+        document.getElementById('clear').addEventListener('click', clearInput);
+        document.getElementById('backspace').addEventListener('click', handleBackspace);
+        document.getElementById('decimal').addEventListener('click', () => {
+            if (!currentNumber.includes('.')) {
+                updateDisplay('.');
+            }
+        });
+    </script>
+</body>
+
+</html>

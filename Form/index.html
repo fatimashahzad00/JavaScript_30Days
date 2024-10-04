@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+
+        form {
+            width: 500px;
+            margin: auto;
+            box-shadow: 0px 0px 10px 2px #ccc;
+            padding: 20px 30px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            margin: 20px auto;
+        }
+
+        form label {
+            display: block;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        form input {
+            width: 100%;
+            height: 30px;
+            margin: 10px 0px;
+            border: 2px solid rgb(178, 173, 173);
+            border-radius: 5px;
+        }
+
+        h2 {
+            padding: 10px 0px;
+            text-align: center;
+        }
+
+        form button {
+            padding: 10px 25px;
+            background-color: blueviolet;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100px;
+            margin: 10px auto;
+        }
+
+        form textarea {
+            width: 100%;
+            height: 30px;
+            margin: 10px 0px;
+            border: 2px solid rgb(178, 173, 173);
+            border-radius: 5px;
+        }
+
+        .main {
+            width: 1320px;
+            margin: auto;
+            display: flex;
+            flex-wrap: wrap;
+
+        }
+
+        .items {
+            flex-basis: 20%;
+            margin: 1%;
+            box-shadow: 0px 0px 0px 10px 2px #ccc;
+            padding: 1%;
+            border: 1px solid;
+            position: relative;
+        }
+
+        .items h5 {
+            margin-top: 10px;
+        }
+
+        .items span {
+            position: absolute;
+            font-size: 30px;
+            right: 0;
+            top: 0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form action="">
+        <h2>Contact Form</h2>
+        <label for="">Name</label>
+        <input type="text" name="uname">
+
+        <label for="">Email</label>
+        <input type="email" name="email">
+
+        <label for="">Phone no</label>
+        <input type="text" name="phone">
+
+        <label for="">Message</label>
+        <textarea name="message"></textarea>
+
+        <button>Save</button>
+    </form>
+
+    <div class="main">
+        <div class="items">
+            <span>&times;</span>
+            <h5>Name</h5>
+            <div>Riya</div>
+
+            <h5>Email</h5>
+            <div>riya@gmail.com</div>
+
+            <h5>Phone</h5>
+            <div>3236354344</div>
+
+            <h5>Message</h5>
+            <div>Hello</div>
+        </div>
+    </div>
+
+    <script>
+        var form = document.querySelector('form');
+        var main = document.querySelector('.main')
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            var name = document.querySelector('input[name="uname"]').value;
+            var email = document.querySelector('input[name="email"]').value;
+            var phone = document.querySelector('input[name="phone"]').value;
+            var message = document.querySelector('textarea[name="message"]').value;
+
+
+            var userData;
+            if (userData) {
+                userData = JSON.parse(localStorage.getItem('userDetails'));
+                console.log(userData);
+            } else {
+                userData = []
+                console.log(userData);
+            }
+            userData.push({
+                'name': name,
+                'email': email,
+                'phone': phone,
+                'message': message
+            })
+
+            localStorage.setItem('userDetails', JSON.stringify(userData));
+
+            
+        })
+
+
+        function displayData() {
+            var userData;
+            if (userData) {
+                userData = JSON.parse(localStorage.getItem('userDetails'));
+                console.log(userData);
+            } else {
+                userData = []
+                console.log(userData);
+            }
+        }
+
+
+        // displayData()
+
+    </script>
+</body>
+
+</html>
